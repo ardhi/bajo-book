@@ -1,0 +1,29 @@
+{% extends 'bajoWebMpaBootstrap:/layout/default' %}
+
+{% block body %}
+{% tag 'breadcrumb', options=breadcrumb %}{% endtag %}
+
+{{ content|safe }}
+
+{% tag 'container', fluid=true %}
+  {% tag 'row' %}
+    <!-- children -->
+    {% tag 'column' %}
+      {% tag 'card' %}
+        {% tag 'cardHeader' %}{{ 'Pages'|t }}{% endtag %}
+        {% tag 'listGroup', options=pages, flush=true %}{% endtag %}
+      {% endtag %}
+    {% endtag %}
+    <!-- reference, if any -->
+    {% if ref %}
+      {% tag 'column' %}
+        {% tag 'card' %}
+          {% tag 'cardHeader' %}{{ 'Reference'|t }}{% endtag %}
+          {% tag 'listGroup', options=ref, flush=true %}{% endtag %}
+        {% endtag %}
+      {% endtag %}
+    {% endif %}
+  {% endtag %}
+{% endtag %}
+
+{% endblock %}

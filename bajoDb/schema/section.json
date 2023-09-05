@@ -1,0 +1,8 @@
+{
+  "properties": [
+    { "name": "id", "maxLength": 255 },
+    { "name": "title", "type": "string", "maxLength": 100, "required": true, "index": true },
+    { "name": "bookId", "type": "string", "required": true, "index": true }
+  ],
+  "feature": ["updatedAt"]
+}

@@ -1,0 +1,11 @@
+{% extends 'bajoWebMpaBootstrap:/layout/default' %}
+
+{% block body %}
+{% tag 'ul' %}
+  {% for d in data.data %}
+  {% tag 'li' %}
+    {% tag 'a', href=routePath('bajoWebBook:' + d.id) %}{{ d.title }}{% endtag %}
+  {% endtag %}
+  {% endfor %}
+{% endtag %}
+{% endblock %}
