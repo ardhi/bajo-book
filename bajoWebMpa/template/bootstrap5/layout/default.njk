@@ -1,0 +1,29 @@
+{% tag 'html', lang=lang, dataBsTheme=dark %}
+  {% tag 'head' %}
+    {% tag 'meta', charset='utf-8' %}{% endtag %}
+    {% tag 'meta', name='viewport', content='width=device-width, initial-scale=1' %}{% endtag %}
+    {% tag 'title'%}Bootstrap demo{% endtag %}
+    {% for c in theme.css %}
+      {% tag 'link', rel='stylesheet', href=c %}{% endtag %}
+    {% endfor %}
+    {% block css %}{% endblock %}
+  {% endtag %}
+  {% tag 'body', padding=0, margin=0 %}
+    {% tag 'navbar', expand='large', bg='primary', sticky='top' %}
+      {% tag 'container', sizing='medium' %}
+        {% tag 'navbarBrand', href='xxx' %}Book{% endtag %}
+        {% tag 'navbarToggler', collapseId='main-navs' %}{% endtag %}
+        {% tag 'navbarCollapse', id='main-navs' %}
+          {% tag 'nav', justifyContent='center', navbar=true, margin='endAuto,bottom2,bottomLarge0', options=[{ caption: 'One' }, { caption: 'Two', active: true }, { caption: 'Three' }] %}{% endtag %}
+        {% endtag %}
+      {% endtag %}
+    {% endtag %}
+    {% tag 'container', sizing='medium', margin='top3' %}
+      {% block body %}{% endblock %}
+    {% endtag %}
+    {% for s in theme.script %}
+      {% tag 'script', src=s %}{% endtag %}
+    {% endfor %}
+    {% block script %}{% endblock %}
+  {% endtag %}
+{% endtag %}
