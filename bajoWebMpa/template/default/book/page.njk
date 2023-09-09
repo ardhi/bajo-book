@@ -1,0 +1,31 @@
+{% extends 'bajoWebBook:/layout/default' %}
+
+{% block body %}
+{% tag 'breadcrumb', options=breadcrumb %}{% endtag %}
+{% tag 'hr' %}{% endtag %}
+
+{{ content|safe }}
+
+{% tag 'row' %}
+  <!-- children -->
+  {% tag 'column' %}
+    {% tag 'card' %}
+      {% tag 'cardHeader' %}{{ 'Pages'|t }}{% endtag %}
+      {% tag 'listGroup', options=pages, flush=true %}{% endtag %}
+    {% endtag %}
+  {% endtag %}
+  <!-- reference, if any -->
+  {% if ref %}
+    {% tag 'column' %}
+      {% tag 'card' %}
+        {% tag 'cardHeader' %}{{ 'Reference'|t }}{% endtag %}
+        {% tag 'listGroup', options=ref, flush=true %}{% endtag %}
+      {% endtag %}
+    {% endtag %}
+  {% endif %}
+{% endtag %}
+
+{% endblock %}
+
+{% block css %}{% endblock %}
+{% block script %}{% endblock %}

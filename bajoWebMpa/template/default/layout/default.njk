@@ -1,4 +1,4 @@
-{% tag 'html', lang=lang, dataBsTheme=dark %}
+{% tag 'html', lang=lang, dataBsTheme=darkMode %}
   {% tag 'head' %}
     {% tag 'meta', charset='utf-8' %}{% endtag %}
     {% tag 'meta', name='viewport', content='width=device-width, initial-scale=1' %}{% endtag %}
@@ -6,15 +6,25 @@
     {% for c in theme.css %}
       {% tag 'link', rel='stylesheet', href=c %}{% endtag %}
     {% endfor %}
+    {% tag 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/css/book.css' %}{% endtag %}
     {% block css %}{% endblock %}
   {% endtag %}
   {% tag 'body', padding=0, margin=0 %}
-    {% tag 'navbar', expand='large', bg='primary', sticky='top' %}
+    {% tag 'navbar', expand='large', bg='primary', sticky='top', dark=true, padding='y3' %}
       {% tag 'container', sizing='medium' %}
-        {% tag 'navbarBrand', href='xxx' %}Book{% endtag %}
+        {% tag 'navbarBrand' %}{{ site.title|d(siteInfo.title) }}{% endtag %}
         {% tag 'navbarToggler', collapseId='main-navs' %}{% endtag %}
         {% tag 'navbarCollapse', id='main-navs' %}
-          {% tag 'nav', justifyContent='center', navbar=true, margin='endAuto,bottom2,bottomLarge0', options=[{ caption: 'One' }, { caption: 'Two', active: true }, { caption: 'Three' }] %}{% endtag %}
+          {% tag 'navbarText' %}{{ 'Books'|t }}{% endtag %}
+          <!--
+          {% tag 'nav', flex='row,wrap' %}
+            {% tag 'navItem' %}test{% endtag %}
+          {% endtag %}
+          -->
+          {% tag 'nav', flex='row,wrap', margin='startAuto' %}
+            {% tag 'navItem', href='#', icon='account' %}{% endtag %}
+            {% tag 'navItem', href='?dark=' + (darkMode === 'light')|ternary('true', 'false'), icon=(darkMode === 'light')|ternary('darkMode', 'lightMode') %}{% endtag %}
+          {% endtag %}
         {% endtag %}
       {% endtag %}
     {% endtag %}
