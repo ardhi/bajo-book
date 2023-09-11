@@ -1,6 +1,6 @@
 {
   "name": "bajo-web-book",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Book management sub-app of MPA Web Server Plugin for Bajo Framework",
   "main": "index.js",
   "scripts": {
