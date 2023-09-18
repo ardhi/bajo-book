@@ -1,39 +1,43 @@
-{% tag 'html', lang=lang, dataBsTheme=darkMode %}
-  {% tag 'head' %}
-    {% tag 'meta', charset='utf-8' %}{% endtag %}
-    {% tag 'meta', name='viewport', content='width=device-width, initial-scale=1' %}{% endtag %}
-    {% tag 'title'%}{{ getConfig('bajoWebBook').title|t }} - {{ site.title|d(siteInfo.title) }}{% endtag %}
-    {% for c in theme.css %}
-      {% tag 'link', rel='stylesheet', href=c %}{% endtag %}
+{% cmp 'html', lang=_meta.lang, dataBsTheme=_meta.darkMode %}
+  {% cmp 'head' %}
+    {% cmp 'meta', charset='utf-8' %}{% endcmp %}
+    {% cmp 'meta', name='viewport', content='width=device-width, initial-scale=1' %}{% endcmp %}
+    {% cmp 'title'%}{{ getConfig('bajoWebBook').title|t }} - {{ _meta.site.title }}{% endcmp %}
+    {% for c in _meta.theme.css %}
+      {% cmp 'link', rel='stylesheet', href=c %}{% endcmp %}
     {% endfor %}
-    {% tag 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/css/book.css' %}{% endtag %}
+    {% cmp 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/css/book.css' %}{% endcmp %}
     {% block css %}{% endblock %}
-  {% endtag %}
-  {% tag 'body', padding=0, margin=0 %}
-    {% tag 'navbar', expand='large', bg='primary', sticky='top', dark=true, padding='y3' %}
-      {% tag 'container', sizing='medium' %}
-        {% tag 'navbarBrand', href=routePath('bajoWebBook:/') %}{{ getConfig('bajoWebBook').title|t }}{% endtag %}
-        {% tag 'navbarToggler', collapseId='main-navs' %}{% endtag %}
-        {% tag 'navbarCollapse', id='main-navs' %}
+  {% endcmp %}
+  {% cmp 'body', padding=0, margin=0 %}
+    {% cmp 'navbar', expand='large', bg='primary', sticky='top', dark=true, padding='y3' %}
+      {% cmp 'container', sizing='medium' %}
+        {% cmp 'navbarBrand', href=routePath('bajoWebBook:/') %}
+          {% cmp 'icon', name='book', margin='end1' %}{% endcmp %}
+          {{ getConfig('bajoWebBook').title|t }}
+        {% endcmp %}
+        {% cmp 'navbarToggler', collapseId='main-navs' %}{% endcmp %}
+        {% cmp 'navbarCollapse', id='main-navs' %}
           <!--
-          {% tag 'nav', flex='row,wrap' %}
-            {% tag 'navItem' %}test{% endtag %}
-          {% endtag %}
+          {% cmp 'nav', flex='row,wrap' %}
+            {% cmp 'navItem' %}test{% endcmp %}
+          {% endcmp %}
           -->
-          {% tag 'nav', flex='row,wrap', margin='startAuto' %}
-            {% tag 'navItemAccount' %}{% endtag %}
-            {% tag 'navItem', noLink=true, padding='x0,y0' %}{% tag 'spacer' %}{% endtag %}{% endtag %}
-            {% tag 'navItemDarkmode' %}{% endtag %}
-          {% endtag %}
-        {% endtag %}
-      {% endtag %}
-    {% endtag %}
-    {% tag 'container', sizing='medium', margin='top3' %}
+          {% cmp 'nav', flex='row,wrap', margin='startAuto' %}
+            {% cmp 'navItemAccount' %}{% endcmp %}
+            {% cmp 'navItem', noLink=true, padding='x0,y0' %}{% cmp 'spacer' %}{% endcmp %}{% endcmp %}
+            {% cmp 'navItemDarkmode' %}{% endcmp %}
+          {% endcmp %}
+        {% endcmp %}
+      {% endcmp %}
+    {% endcmp %}
+    {% cmp 'container', sizing='medium', margin='top3' %}
       {% block body %}{% endblock %}
-    {% endtag %}
-    {% for s in theme.script %}
-      {% tag 'script', src=s %}{% endtag %}
+    {% endcmp %}
+    {% include 'bajoWebMpa:/partial/footer' %}
+    {% for s in _meta.theme.script %}
+      {% cmp 'script', src=s %}{% endcmp %}
     {% endfor %}
     {% block script %}{% endblock %}
-  {% endtag %}
-{% endtag %}
+  {% endcmp %}
+{% endcmp %}

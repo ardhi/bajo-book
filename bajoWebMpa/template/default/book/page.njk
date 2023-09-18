@@ -1,29 +1,29 @@
 {% extends 'bajoWebBook:/layout/default' %}
 
 {% block body %}
-{% tag 'breadcrumb', options=breadcrumb %}{% endtag %}
-{% tag 'hr' %}{% endtag %}
-
+{% cmp 'breadcrumb', options=breadcrumb %}{% endcmp %}
+{% cmp 'hr' %}{% endcmp %}
+{% cmp 'h6', margin='bottom4', displayHeading=6 %}{{ page.level }} {{ page.title|t }}{% endcmp %}
 {{ content|safe }}
 
-{% tag 'row' %}
+{% cmp 'row', margin='top5' %}
   <!-- children -->
-  {% tag 'column' %}
-    {% tag 'card' %}
-      {% tag 'cardHeader' %}{{ 'Pages'|t }}{% endtag %}
-      {% tag 'listGroup', options=pages, flush=true %}{% endtag %}
-    {% endtag %}
-  {% endtag %}
+  {% cmp 'column', columns='small:6', margin='bottom3' %}
+    {% cmp 'card' %}
+      {% cmp 'cardHeader' %}{{ 'Pages & Sections'|t }}{% endcmp %}
+      {% cmp 'listGroup', options=pages, flush=true %}{% endcmp %}
+    {% endcmp %}
+  {% endcmp %}
   <!-- reference, if any -->
   {% if ref %}
-    {% tag 'column' %}
-      {% tag 'card' %}
-        {% tag 'cardHeader' %}{{ 'Reference'|t }}{% endtag %}
-        {% tag 'listGroup', options=ref, flush=true %}{% endtag %}
-      {% endtag %}
-    {% endtag %}
+    {% cmp 'column', columns='small:6' %}
+      {% cmp 'card' %}
+        {% cmp 'cardHeader' %}{{ 'Reference'|t }}{% endcmp %}
+        {% cmp 'listGroup', options=ref, flush=true %}{% endcmp %}
+      {% endcmp %}
+    {% endcmp %}
   {% endif %}
-{% endtag %}
+{% endcmp %}
 
 {% endblock %}
 

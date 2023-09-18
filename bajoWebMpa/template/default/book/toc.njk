@@ -1,7 +1,24 @@
 {% extends 'bajoWebBook:/layout/default' %}
 
 {% block body %}
-{% tag 'tree', options=tree %}{% endtag %}
+<!--
+{% cmp 'tree', tag='ul', options=tree %}{% endcmp %}
+-->
+{% cmp 'h6', margin='bottom4', displayHeading=6 %}{{ 'Table of Contents'|t }}{% endcmp %}
+{% cmp 'div', lineHeight='large' %}
+{% for p in pages %}
+  {% cmp 'row' %}
+    {% if p.level|split('.')|length === 1 %}
+      {% cmp 'column', columns=[':auto', 'medium:1'] %}{% cmp 'h5', margin='y3' %}{{ p.level }}{% endcmp %}{% endcmp %}
+      {% cmp 'column', columns=[':auto', 'medium:11'] %}{% cmp 'h5', margin='y3' %}{% cmp 'a', href=p.href %}{{ p.title }}{% endcmp %}{% endcmp %}{% endcmp %}
+    {% else %}
+      {% cmp 'column', columns=[':auto', 'medium:1'] %}{{ p.level }}{% endcmp %}
+      {% cmp 'column', columns=[':auto', 'medium:11'] %}{% cmp 'a', href=p.href %}{{ p.title }}{% endcmp %}{% endcmp %}
+    {% endif %}
+  {% endcmp %}
+{% endfor %}
+{% endcmp %}
+
 {% endblock %}
 
 {% block css %}{% endblock %}

@@ -2,11 +2,14 @@
   "properties": [
     { "name": "id", "maxLength": 255 },
     { "name": "title", "type": "string", "maxLength": 100, "required": true, "index": true },
+    { "name": "description", "type": "string" },
+    { "name": "level", "type": "string", "maxLength": 50, "index": true },
     { "name": "asset", "type": "boolean", "index": true },
     { "name": "section", "type": "boolean", "index": true },
     { "name": "file", "type": "string", "required": true },
     { "name": "sectionId", "type": "string", "index": true },
     { "name": "bookId", "type": "string", "required": true, "index": true },
+    { "name": "meta", "type": "object" },
     { "name": "ref", "type": "object" }
   ],
   "feature": ["updatedAt"]

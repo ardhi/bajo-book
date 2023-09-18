@@ -1,13 +1,20 @@
 {% extends 'bajoWebBook:/layout/default' %}
 
 {% block body %}
-{% tag 'ul' %}
+{% cmp 'row', masonry=true %}
   {% for d in data.data %}
-  {% tag 'li' %}
-    {% tag 'a', href=routePath('bajoWebBook:' + d.id) %}{{ d.title }}{% endtag %}
-  {% endtag %}
+    {% cmp 'column', columns=['small:6', 'large:4'], margin='bottom4' %}
+      {% cmp 'card' %}
+        {% cmp 'cardImage', src='holder.js/200x100?auto=yes' %}{% endcmp %}
+        {% cmp 'cardBody' %}
+          {% cmp 'cardTitle' %}{{ d.title }}{% endcmp %}
+          {% cmp 'cardText' %}{{ d.description }}{% endcmp %}
+          {% cmp 'cardLink', href=routePath('bajoWebBook:' + d.id) %}{{ 'Go'|t }}{% endcmp %}
+        {% endcmp %}
+      {% endcmp %}
+    {% endcmp %}
   {% endfor %}
-{% endtag %}
+{% endcmp %}
 {% endblock %}
 
 {% block css %}{% endblock %}
