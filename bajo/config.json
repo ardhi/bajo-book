@@ -1,5 +1,7 @@
 {
   "title": "Books",
   "prefix": "book",
-  "tocUrl": "table-of-contents"
+  "markdown": {
+    "tableClass": "table table-striped table-bordered"
+  }
 }

@@ -6,16 +6,28 @@
     {% for c in _meta.theme.css %}
       {% cmp 'link', rel='stylesheet', href=c %}{% endcmp %}
     {% endfor %}
+    {% if _meta.darkMode === 'dark' %}
+      {% cmp 'link', rel='stylesheet', href=virtualDir('bajoWebBook') + '/highlight.js/styles/dark.min.css' %}{% endcmp %}
+    {% else %}
+      {% cmp 'link', rel='stylesheet', href=virtualDir('bajoWebBook') + '/highlight.js/styles/default.min.css' %}{% endcmp %}
+    {% endif %}
     {% cmp 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/css/book.css' %}{% endcmp %}
     {% block css %}{% endblock %}
   {% endcmp %}
   {% cmp 'body', padding=0, margin=0 %}
     {% cmp 'navbar', expand='large', bg='primary', sticky='top', dark=true, padding='y3' %}
       {% cmp 'container', sizing='medium' %}
-        {% cmp 'navbarBrand', href=routePath('bajoWebBook:/') %}
-          {% cmp 'icon', name='book', margin='end1' %}{% endcmp %}
-          {{ getConfig('bajoWebBook').title|t }}
-        {% endcmp %}
+        {% if book %}
+          {% cmp 'navbarBrand' %}
+            {% cmp 'a', href=routePath('bajoWebBook:/'), icon='arrowLeft', iconMargin='end1', iconText='white' %}{% endcmp %}
+            {{ book.title }}
+          {% endcmp %}
+        {% else %}
+          {% cmp 'navbarBrand', href=routePath('bajoWebBook:/') %}
+            {% cmp 'icon', name='book', margin='end1' %}{% endcmp %}
+            {{ getConfig('bajoWebBook').title|t }}
+          {% endcmp %}
+        {% endif %}
         {% cmp 'navbarToggler', collapseId='main-navs' %}{% endcmp %}
         {% cmp 'navbarCollapse', id='main-navs' %}
           <!--
@@ -38,6 +50,10 @@
     {% for s in _meta.theme.script %}
       {% cmp 'script', src=s %}{% endcmp %}
     {% endfor %}
+    {% cmp 'script', src=virtualDir('bajoWebBook') + '/highlight.js/highlight.min.js' %}{% endcmp %}
     {% block script %}{% endblock %}
+    <!--
+    {% cmp 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/js/book.js' %}{% endcmp %}
+    -->
   {% endcmp %}
 {% endcmp %}

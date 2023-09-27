@@ -5,7 +5,7 @@
   {% for d in data.data %}
     {% cmp 'column', columns=['small:6', 'large:4'], margin='bottom4' %}
       {% cmp 'card' %}
-        {% cmp 'cardImage', src='holder.js/200x100?auto=yes' %}{% endcmp %}
+        {% cmp 'cardImage', src=routePath('bajoWebBook:' + d.id) + '/' + d.meta.coverImage %}{% endcmp %}
         {% cmp 'cardBody' %}
           {% cmp 'cardTitle' %}{{ d.title }}{% endcmp %}
           {% cmp 'cardText' %}{{ d.description }}{% endcmp %}

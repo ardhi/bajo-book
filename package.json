@@ -1,6 +1,6 @@
 {
   "name": "bajo-web-book",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Book management sub-app of MPA Web Server Plugin for Bajo Framework",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/ardhi/bajo-web-book#readme",
   "dependencies": {
+    "@highlightjs/cdn-assets": "^11.8.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.8.0",
     "marked": "^7.0.5",

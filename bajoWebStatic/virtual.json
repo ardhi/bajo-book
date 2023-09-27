@@ -1,0 +1,4 @@
+[{
+  "prefix": "highlight.js",
+  "root": "node_modules/@highlightjs/cdn-assets"
+}]
