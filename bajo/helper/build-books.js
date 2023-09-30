@@ -1,11 +1,11 @@
 import path from 'path'
-import matter from 'gray-matter'
 
 const recs = ['book', 'section', 'page']
 const rec = {}
 for (const r of recs) {
   rec[r] = []
 }
+let metadata = {}
 
 function getTitleFromPath (item) {
   const [prefix, ...params] = item.split('-')
@@ -24,21 +24,26 @@ function trimLevels (file, dir) {
 }
 
 async function getPages (book) {
-  const { importPkg, titleize, readConfig } = this.bajo.helper
+  const { importPkg, titleize } = this.bajo.helper
   const { doctypes } = this.bajoWebBook.helper
   const { find, merge, concat } = await importPkg('lodash-es')
-  const [fs, fastGlob] = await importPkg('fs-extra', 'fast-glob')
-  const files = (await fastGlob(`${book.dir}/**/*`)).sort()
+  const [fs, fastGlob, matter] = await importPkg('fs-extra', 'fast-glob', 'bajo-web-mpa:gray-matter')
+  const pagesDir = `${book.dir}/pages`
+  const files = (await fastGlob(`${pagesDir}/**/*`)).sort()
   const pages = []
   const sections = []
   for (const file of files) {
-    let id = book.id + trimLevels(file, book.dir)
+    let id = book.id + trimLevels(file, pagesDir)
     const [level, ...bases] = path.basename(file).split('-')
     const [sectionLevel] = path.basename(path.dirname(file)).split('-')
     id = `${path.dirname(id)}/${bases.join('-')}`
     const ext = path.extname(id)
+    let fileBase = file.replace(`${book.dir}/pages/`, '')
     const asset = !doctypes.includes(ext)
-    if (!asset) id = id.slice(0, id.length - ext.length)
+    if (!asset) {
+      id = id.slice(0, id.length - ext.length)
+      fileBase = fileBase.slice(0, fileBase.length - ext.length)
+    }
     const sectionId = path.dirname(id)
     let extraMatter = {}
     if (ext === '.md') {
@@ -49,7 +54,7 @@ async function getPages (book) {
     // sections
     if (sectionId !== book.id && !find(sections, { id: sectionId })) {
       const title = titleize(getTitleFromPath(path.basename(sectionId)))
-      const extra = await readConfig(`${path.dirname(file)}/.${path.basename(sectionId)}.*`, { ignoreError: true })
+      const extra = metadata.pages[path.dirname(fileBase)] ?? {}
       sections.push(merge({
         id: sectionId,
         bookId: book.id,
@@ -69,7 +74,7 @@ async function getPages (book) {
       }, extra))
     }
     // pages
-    const extra = await readConfig(`${path.dirname(file)}/.${path.basename(file, ext)}.*`, { ignoreError: true })
+    const extra = metadata.pages[fileBase] ?? {}
     pages.push(merge({
       id,
       title: titleize(getTitleFromPath(path.basename(file, ext))),
@@ -141,6 +146,7 @@ async function buildBooks (progress) {
   const { readConfig, eachPlugins, importPkg } = this.bajo.helper
   const { merge, omit } = await importPkg('lodash-es')
   await eachPlugins(async function ({ file, plugin, dir, alias }) {
+    metadata = {}
     const title = path.basename(file)
     const book = {
       id: `/${alias}/${title}`,
@@ -148,12 +154,14 @@ async function buildBooks (progress) {
       plugin,
       dir: file
     }
-    const extra = await readConfig(`${file}/.${path.basename(file)}.*`, { ignoreError: true })
-    merge(book, omit(extra, ['plugin', 'dir']))
+    metadata = (await readConfig(`${file}/.metadata.*`, { ignoreError: true })) ?? {}
+    merge(book, omit(metadata.book, ['plugin', 'dir']))
+    metadata.book = metadata.book ?? {}
+    metadata.pages = metadata.pages ?? {}
     rec.book.push(book)
     await getPages.call(this, book)
-    await save.call(this)
   }, { glob: { pattern: 'book/*', onlyDirectories: true } })
+  await save.call(this)
 }
 
 export default buildBooks

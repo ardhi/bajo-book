@@ -1,4 +1,5 @@
 {% extends 'bajoWebBook:/layout/default' %}
+{% from 'bajoWebBook:/macro/cover' import cover with context %}
 
 {% block body %}
 {% cmp 'div', display='flex', justifyContent='between', margin='bottom4' %}
@@ -10,23 +11,46 @@
     ] %}{% endcmp %}
   {% endcmp %}
 {% endcmp %}
-{% if list === 'nested' %}
-  {% cmp 'tree', tag='ul', options=tree, lineHeight='large' %}{% endcmp %}
-{% else %}
-  {% cmp 'div', lineHeight='large' %}
-    {% for p in pages %}
-      {% cmp 'row' %}
-        {% if p.level|split('.')|length === 1 %}
-          {% cmp 'column', columns=[':auto', 'medium:1'] %}{% cmp 'h5', margin='y3' %}{{ p.level }}{% endcmp %}{% endcmp %}
-          {% cmp 'column', columns=[':auto', 'medium:11'] %}{% cmp 'h5', margin='y3' %}{% cmp 'a', href=p.href %}{{ p.title }}{% endcmp %}{% endcmp %}{% endcmp %}
-        {% else %}
-          {% cmp 'column', columns=[':auto', 'medium:1'] %}{{ p.level }}{% endcmp %}
-          {% cmp 'column', columns=[':auto', 'medium:11'] %}{% cmp 'a', href=p.href %}{{ p.title }}{% endcmp %}{% endcmp %}
-        {% endif %}
+{% cmp 'row' %}
+  {% cmp 'col', columns=['small:12', 'medium:8'] %}
+    {% if list === 'nested' %}
+      {% cmp 'tree', tag='ul', options=tree, lineHeight='large' %}{% endcmp %}
+    {% else %}
+      {% cmp 'div', lineHeight='large' %}
+        {% for p in pages %}
+          {% cmp 'row' %}
+            {% if p.level|split('.')|length === 1 %}
+              {% cmp 'col', columns=[':auto', 'medium:1'] %}
+                {% cmp 'h5', margin='y3' %}
+                  {{ p.level }}
+                {% endcmp %}
+              {% endcmp %}
+              {% cmp 'col', columns=[':auto', 'medium:11'] %}
+                {% cmp 'h5', margin='y3' %}
+                  {% cmp 'a', href=p.href %}
+                    {{ p.title|t }}
+                  {% endcmp %}
+                {% endcmp %}
+              {% endcmp %}
+            {% else %}
+              {% cmp 'col', columns=[':auto', 'medium:1'] %}
+                {{ p.level }}
+              {% endcmp %}
+              {% cmp 'col', columns=[':auto', 'medium:11'] %}
+                {% cmp 'a', href=p.href %}
+                  {{ p.title|t }}
+                {% endcmp %}
+              {% endcmp %}
+            {% endif %}
+          {% endcmp %}
+        {% endfor %}
       {% endcmp %}
-    {% endfor %}
+    {% endif %}
   {% endcmp %}
-{% endif %}
+  {% cmp 'col', columns=['small:12', 'medium:4'] %}
+    {{ cover(book) }}
+  {% endcmp %}
+{% endcmp %}
 {% endblock %}
 
 {% block css %}{% endblock %}

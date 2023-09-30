@@ -7,20 +7,20 @@
       {% cmp 'link', rel='stylesheet', href=c %}{% endcmp %}
     {% endfor %}
     {% if _meta.darkMode === 'dark' %}
-      {% cmp 'link', rel='stylesheet', href=virtualDir('bajoWebBook') + '/highlight.js/styles/dark.min.css' %}{% endcmp %}
+      {% cmp 'link', rel='stylesheet', href=virtualDir('bajoWebMpa') + '/highlight.js/styles/dark.min.css' %}{% endcmp %}
     {% else %}
-      {% cmp 'link', rel='stylesheet', href=virtualDir('bajoWebBook') + '/highlight.js/styles/default.min.css' %}{% endcmp %}
+      {% cmp 'link', rel='stylesheet', href=virtualDir('bajoWebMpa') + '/highlight.js/styles/default.min.css' %}{% endcmp %}
     {% endif %}
     {% cmp 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/css/book.css' %}{% endcmp %}
     {% block css %}{% endblock %}
   {% endcmp %}
   {% cmp 'body', padding=0, margin=0 %}
-    {% cmp 'navbar', expand='large', bg='primary', sticky='top', dark=true, padding='y3' %}
+    {% cmp 'navbar', expand='large', bg='primary', sticky='top', dark=true, padding='y3', shadow=true %}
       {% cmp 'container', sizing='medium' %}
         {% if book %}
           {% cmp 'navbarBrand' %}
             {% cmp 'a', href=routePath('bajoWebBook:/'), icon='arrowLeft', iconMargin='end1', iconText='white' %}{% endcmp %}
-            {{ book.title }}
+            {{ book.title|t }}
           {% endcmp %}
         {% else %}
           {% cmp 'navbarBrand', href=routePath('bajoWebBook:/') %}
@@ -50,7 +50,7 @@
     {% for s in _meta.theme.script %}
       {% cmp 'script', src=s %}{% endcmp %}
     {% endfor %}
-    {% cmp 'script', src=virtualDir('bajoWebBook') + '/highlight.js/highlight.min.js' %}{% endcmp %}
+    {% cmp 'script', src=virtualDir('bajoWebMpa') + '/highlight.js/highlight.min.js' %}{% endcmp %}
     {% block script %}{% endblock %}
     <!--
     {% cmp 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/js/book.js' %}{% endcmp %}

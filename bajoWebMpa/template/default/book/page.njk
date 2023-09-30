@@ -3,12 +3,15 @@
 {% block body %}
 {% cmp 'breadcrumb', options=breadcrumb %}{% endcmp %}
 {% cmp 'hr' %}{% endcmp %}
-{% cmp 'h6', margin='bottom4', displayHeading=6 %}{{ page.level }} {{ page.title|t }}{% endcmp %}
+{% cmp 'h6', margin='bottom4', displayHeading=6 %}
+  {{ page.level }}
+  {{ page.title|t }}
+{% endcmp %}
 {{ content|safe }}
 
 {% cmp 'row', margin='top5' %}
   <!-- children -->
-  {% cmp 'column', columns='small:6', margin='bottom3' %}
+  {% cmp 'col', columns='small:6', margin='bottom3' %}
     {% cmp 'card' %}
       {% cmp 'cardHeader' %}{{ 'Pages & Sections'|t }}{% endcmp %}
       {% cmp 'listGroup', options=pages, flush=true %}{% endcmp %}
@@ -16,7 +19,7 @@
   {% endcmp %}
   <!-- reference, if any -->
   {% if ref %}
-    {% cmp 'column', columns='small:6' %}
+    {% cmp 'col', columns='small:6' %}
       {% cmp 'card' %}
         {% cmp 'cardHeader' %}{{ 'Reference'|t }}{% endcmp %}
         {% cmp 'listGroup', options=ref, flush=true %}{% endcmp %}

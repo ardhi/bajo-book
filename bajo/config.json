@@ -3,5 +3,6 @@
   "prefix": "book",
   "markdown": {
     "tableClass": "table table-striped table-bordered"
-  }
+  },
+  "dependencies": ["bajo-web", "bajo-extra", "bajo-web-mpa", "bajo-web-static"]
 }

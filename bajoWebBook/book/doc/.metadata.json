@@ -1,0 +1,25 @@
+{
+  "book": {
+    "title": "Bajo Book Documentation",
+    "description": "Instructions for setup, use and reference for the Bajo Book application module. Also included are instructions for creating a new book which will automatically be loaded when the program runs",
+    "author": "Ardhi Lukianto <ardhi@lukianto.com>",
+    "meta": {
+      "coverImage": "open-book-icon-symbol-yellow-background-education-bookstore-concept-3d-rendering.jpg",
+      "coverImageAttr": "<a href=\"https://www.freepik.com/free-photo/open-book-icon-symbol-yellow-background-education-bookstore-concept-3d-rendering_24803422.htm#query=open%20book&position=31&from_view=keyword&track=ais\">Image by mamewmy</a> on Freepik"
+    }
+  },
+  "pages": {
+    "1-guides": {
+      "title": "User Guides"
+    },
+    "2-api": {
+      "title": "API"
+    },
+    "2-api/2.2-helper/2.2.1-build-books": {
+      "title": "buildBooks()"
+    },
+    "3-compose/3.2-chapter-section": {
+      "title": "Chapter/Section"
+    }
+  }
+}

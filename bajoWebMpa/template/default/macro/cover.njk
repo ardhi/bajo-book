@@ -1,0 +1,12 @@
+{% macro cover(book, link) %}
+{% cmp 'card', shadow=true %}
+  {% cmp 'cardImage', src=routePath('bajoWebBook:' + book.id) + '/' + book.meta.coverImage %}{% endcmp %}
+  {% cmp 'cardBody' %}
+    {% cmp 'cardTitle' %}{{ book.title|t }}{% endcmp %}
+    {% cmp 'cardText' %}{{ book.description|t }}{% endcmp %}
+    {% if link %}
+      {% cmp 'button', tag='a', variant='primary', href=routePath('bajoWebBook:' + book.id), stretchedLink=true %}{{ 'Go'|t }}{% endcmp %}
+    {% endif %}
+  {% endcmp %}
+{% endcmp %}
+{% endmacro %}

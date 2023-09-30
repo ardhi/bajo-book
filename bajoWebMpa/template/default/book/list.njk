@@ -1,20 +1,47 @@
 {% extends 'bajoWebBook:/layout/default' %}
+{% from 'bajoWebBook:/macro/cover' import cover with context %}
 
 {% block body %}
-{% cmp 'row', masonry=true %}
-  {% for d in data.data %}
-    {% cmp 'column', columns=['small:6', 'large:4'], margin='bottom4' %}
-      {% cmp 'card' %}
-        {% cmp 'cardImage', src=routePath('bajoWebBook:' + d.id) + '/' + d.meta.coverImage %}{% endcmp %}
-        {% cmp 'cardBody' %}
-          {% cmp 'cardTitle' %}{{ d.title }}{% endcmp %}
-          {% cmp 'cardText' %}{{ d.description }}{% endcmp %}
-          {% cmp 'cardLink', href=routePath('bajoWebBook:' + d.id) %}{{ 'Go'|t }}{% endcmp %}
-        {% endcmp %}
+{% cmp 'navbar', margin='bottom3' %}
+  {% cmp 'form', display='flex', role='search' %}
+    {% cmp 'input', margin='end2', type='search', placeholder='Search'|t, ariaLabel='Search' %}{% endcmp %}
+  {% endcmp %}
+  {% cmp 'div', display='flex', alignItems='center' %}
+    {% cmp 'buttonGroup', outline=true, radio=true, options=[
+      { href: '?list=bullet', icon: 'listBullet', active: list === 'bullet' },
+      { href: '?list=gridsmall', icon: 'gridSmall', active: list === 'gridsmall' },
+      { href: '?list=grid', icon: 'grid', active: list === 'grid'  }
+    ] %}{% endcmp %}
+  {% endcmp %}
+{% endcmp %}
+{% if list === 'bullet' %}
+  {% for book in data.data %}
+    {% cmp 'row', position='relative' %}
+      {% cmp 'col', columns=['small:4', 'large:3'], margin='bottom4' %}
+        {% cmp 'img', rounded=true, fluid=true, src=routePath('bajoWebBook:' + book.id) + '/' + book.meta.coverImage %}{% endcmp %}
+      {% endcmp %}
+      {% cmp 'col', columns=['small:8', 'large:9'], margin='bottom4' %}
+        {% cmp 'h3' %}{{ book.title|t }}{% endcmp %}
+        {% cmp 'p' %}{{ book.description|t }}{% endcmp %}
+        {% cmp 'a', href=routePath('bajoWebBook:' + book.id), stretchedLink=true %}{{ 'Read'|t }}{% endcmp %}
       {% endcmp %}
     {% endcmp %}
   {% endfor %}
-{% endcmp %}
+{% else %}
+  {% cmp 'row', class='masonry' %}
+    {% for book in data.data %}
+      {% if list === 'gridsmall' %}
+        {% cmp 'col', columns=['small:4', 'large:3'], margin='bottom4' %}
+          {{ cover(book, true) }}
+        {% endcmp %}
+      {% else %}
+        {% cmp 'col', columns=['small:6', 'large:4'], margin='bottom4' %}
+          {{ cover(book, true) }}
+        {% endcmp %}
+      {% endif %}
+    {% endfor %}
+  {% endcmp %}
+{% endif %}
 {% endblock %}
 
 {% block css %}{% endblock %}
