@@ -160,7 +160,7 @@ async function buildBooks (progress) {
     metadata.pages = metadata.pages ?? {}
     rec.book.push(book)
     await getPages.call(this, book)
-  }, { glob: { pattern: 'book/*', onlyDirectories: true } })
+  }, { glob: { pattern: 'book/*', onlyDirectories: true }, useBajo: true })
   await save.call(this)
 }
 

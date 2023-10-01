@@ -12,7 +12,7 @@ async function rebuild (path, args) {
     process.exit(1)
   }
   const cfg = getConfig('bajoDb', { full: true })
-  const start = await importModule(`${cfg.dir}/bajo/start.js`)
+  const start = await importModule(`${cfg.dir.pkg}/bajo/start.js`)
   await start.call(this, 'all')
   await buildBooks()
 }
