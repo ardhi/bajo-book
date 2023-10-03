@@ -1,7 +1,7 @@
 {
-  "name": "bajo-web-book",
-  "version": "0.1.17",
-  "description": "Book management sub-app of MPA Web Server Plugin for Bajo Framework",
+  "name": "bajo-book",
+  "version": "0.1.18",
+  "description": "Book App for Bajo Framework",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ardhi/bajo-web-book.git"
+    "url": "git+https://github.com/ardhi/bajo-book.git"
   },
   "keywords": [
     "book",
@@ -27,8 +27,8 @@
   "author": "Ardhi Lukianto <ardhi@lukianto.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ardhi/bajo-web-book/issues"
+    "url": "https://github.com/ardhi/bajo-book/issues"
   },
-  "homepage": "https://github.com/ardhi/bajo-web-book#readme",
+  "homepage": "https://github.com/ardhi/bajo-book#readme",
   "dependencies": {}
 }

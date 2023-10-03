@@ -1,5 +1,5 @@
 async function bajoAfterStartBajoDb () {
-  const { buildBooks } = this.bajoWebBook.helper
+  const { buildBooks } = this.bajoBook.helper
   await buildBooks()
 }
 

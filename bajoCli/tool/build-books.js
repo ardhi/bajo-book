@@ -1,6 +1,6 @@
-async function rebuild (path, args) {
+async function buildBooks (path, args) {
   const { importPkg, print, importModule, getConfig } = this.bajo.helper
-  const { buildBooks } = this.bajoWebBook.helper
+  const { buildBooks } = this.bajoBook.helper
   const prompts = await importPkg('bajo-cli:@inquirer/prompts')
   const { confirm } = prompts
   const answer = await confirm({
@@ -17,4 +17,4 @@ async function rebuild (path, args) {
   await buildBooks()
 }
 
-export default rebuild
+export default buildBooks

@@ -1,5 +1,5 @@
-{% extends 'bajoWebBook:/layout/default' %}
-{% from 'bajoWebBook:/macro/cover' import cover with context %}
+{% extends 'bajoBook:/layout/default' %}
+{% from 'bajoBook:/macro/cover' import cover with context %}
 
 {% block body %}
 {% cmp 'navbar', margin='bottom3' %}
@@ -12,12 +12,12 @@
   {% for book in data %}
     {% cmp 'row', position='relative' %}
       {% cmp 'col', columns=['small:4', 'large:3'], margin='bottom4' %}
-        {% cmp 'img', rounded=true, fluid=true, src=routePath('bajoWebBook:' + book.id) + '/' + book.meta.coverImage %}{% endcmp %}
+        {% cmp 'img', rounded=true, fluid=true, src=routePath('bajoBook:' + book.id) + '/' + book.meta.coverImage %}{% endcmp %}
       {% endcmp %}
       {% cmp 'col', columns=['small:8', 'large:9'], margin='bottom4' %}
         {% cmp 'h3' %}{{ book.title|t }}{% endcmp %}
         {% cmp 'p' %}{{ book.description|t }}{% endcmp %}
-        {% cmp 'a', href=routePath('bajoWebBook:' + book.id), stretchedLink=true %}{{ 'Read'|t }}{% endcmp %}
+        {% cmp 'a', href=routePath('bajoBook:' + book.id), stretchedLink=true %}{{ 'Read'|t }}{% endcmp %}
       {% endcmp %}
     {% endcmp %}
   {% endfor %}

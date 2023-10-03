@@ -2,7 +2,7 @@
   {% cmp 'head' %}
     {% cmp 'meta', charset='utf-8' %}{% endcmp %}
     {% cmp 'meta', name='viewport', content='width=device-width, initial-scale=1' %}{% endcmp %}
-    {% cmp 'title'%}{{ getConfig('bajoWebBook').title|t }} - {{ _meta.site.title }}{% endcmp %}
+    {% cmp 'title'%}{{ getConfig('bajoBook').title|t }} - {{ _meta.site.title }}{% endcmp %}
     {% for c in _meta.theme.css %}
       {% cmp 'link', rel='stylesheet', href=c %}{% endcmp %}
     {% endfor %}
@@ -11,7 +11,7 @@
     {% else %}
       {% cmp 'link', rel='stylesheet', href=virtualDir('bajoWebMpa') + '/highlight.js/styles/default.min.css' %}{% endcmp %}
     {% endif %}
-    {% cmp 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/css/book.css' %}{% endcmp %}
+    {% cmp 'link', rel='stylesheet', href=assetDir('bajoBook') + '/css/book.css' %}{% endcmp %}
     {% block css %}{% endblock %}
   {% endcmp %}
   {% cmp 'body', padding=0, margin=0 %}
@@ -19,13 +19,13 @@
       {% cmp 'container', sizing='medium' %}
         {% if book %}
           {% cmp 'navbarBrand' %}
-            {% cmp 'a', href=routePath('bajoWebBook:/'), icon='arrowLeft', iconMargin='end1', iconText='white' %}{% endcmp %}
+            {% cmp 'a', href=routePath('bajoBook:/'), icon='arrowLeft', iconMargin='end1', iconText='white' %}{% endcmp %}
             {{ book.title|t }}
           {% endcmp %}
         {% else %}
-          {% cmp 'navbarBrand', href=routePath('bajoWebBook:/') %}
+          {% cmp 'navbarBrand', href=routePath('bajoBook:/') %}
             {% cmp 'icon', name='book', margin='end1' %}{% endcmp %}
-            {{ getConfig('bajoWebBook').title|t }}
+            {{ getConfig('bajoBook').title|t }}
           {% endcmp %}
         {% endif %}
         {% cmp 'navbarToggler', collapseId='main-navs' %}{% endcmp %}
@@ -53,7 +53,7 @@
     {% cmp 'script', src=virtualDir('bajoWebMpa') + '/highlight.js/highlight.min.js' %}{% endcmp %}
     {% block script %}{% endblock %}
     <!--
-    {% cmp 'link', rel='stylesheet', href=assetDir('bajoWebBook') + '/js/book.js' %}{% endcmp %}
+    {% cmp 'link', rel='stylesheet', href=assetDir('bajoBook') + '/js/book.js' %}{% endcmp %}
     -->
   {% endcmp %}
 {% endcmp %}
