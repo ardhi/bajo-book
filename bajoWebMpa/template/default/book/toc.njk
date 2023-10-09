@@ -20,27 +20,45 @@
         {% for p in pages %}
           {% cmp 'row' %}
             {% if p.level|split('.')|length === 1 %}
-              {% cmp 'col', columns=[':auto', 'medium:1'] %}
-                {% cmp 'h5', margin='y3' %}
-                  {{ p.level }}
+              {% if book.meta.hideLevel %}
+                {% cmp 'col' %}
+                  {% cmp 'h5', margin='y3' %}
+                    {% cmp 'a', href=p.href %}
+                      {{ p.title|t }}
+                    {% endcmp %}
+                  {% endcmp %}
                 {% endcmp %}
-              {% endcmp %}
-              {% cmp 'col', columns=[':auto', 'medium:11'] %}
-                {% cmp 'h5', margin='y3' %}
+              {% else %}
+                {% cmp 'col', columns=[':auto', 'medium:1'] %}
+                  {% cmp 'h5', margin='y3' %}
+                    {{ p.level }}
+                  {% endcmp %}
+                {% endcmp %}
+                {% cmp 'col', columns=[':auto', 'medium:11'] %}
+                  {% cmp 'h5', margin='y3' %}
+                    {% cmp 'a', href=p.href %}
+                      {{ p.title|t }}
+                    {% endcmp %}
+                  {% endcmp %}
+                {% endcmp %}
+              {% endif %}
+            {% else %}
+              {% if book.meta.hideLevel %}
+                {% cmp 'col' %}
                   {% cmp 'a', href=p.href %}
                     {{ p.title|t }}
                   {% endcmp %}
                 {% endcmp %}
-              {% endcmp %}
-            {% else %}
-              {% cmp 'col', columns=[':auto', 'medium:1'] %}
-                {{ p.level }}
-              {% endcmp %}
-              {% cmp 'col', columns=[':auto', 'medium:11'] %}
-                {% cmp 'a', href=p.href %}
-                  {{ p.title|t }}
+              {% else %}
+                {% cmp 'col', columns=[':auto', 'medium:1'] %}
+                  {{ p.level }}
                 {% endcmp %}
-              {% endcmp %}
+                {% cmp 'col', columns=[':auto', 'medium:11'] %}
+                  {% cmp 'a', href=p.href %}
+                    {{ p.title|t }}
+                  {% endcmp %}
+                {% endcmp %}
+              {% endif %}
             {% endif %}
           {% endcmp %}
         {% endfor %}
@@ -48,7 +66,7 @@
     {% endif %}
   {% endcmp %}
   {% cmp 'col', columns=['small:12', 'medium:4'] %}
-    {{ cover(book) }}
+    {{ cover(book, false, true) }}
   {% endcmp %}
 {% endcmp %}
 {% endblock %}

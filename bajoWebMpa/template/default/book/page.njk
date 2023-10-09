@@ -4,7 +4,7 @@
 {% cmp 'breadcrumb', options=breadcrumb %}{% endcmp %}
 {% cmp 'hr' %}{% endcmp %}
 {% cmp 'h6', margin='bottom4', displayHeading=6 %}
-  {{ page.level }}
+  {% if not book.meta.hideLevel %}{{ page.level }}{% endif %}
   {{ page.title|t }}
 {% endcmp %}
 {{ content|safe }}

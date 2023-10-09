@@ -7,26 +7,10 @@ for (const r of recs) {
 }
 let metadata = {}
 
-function getTitleFromPath (item) {
-  const [prefix, ...params] = item.split('-')
-  if (!isNaN(parseInt(prefix[0]))) return params.join('-')
-  return item
-}
-
-function trimLevels (file, dir) {
-  file = file.replace(dir, '')
-  const parts = file.split('/')
-  for (const i in parts) {
-    const [, ...items] = parts[i].split('-')
-    parts[i] = items.join('-')
-  }
-  return parts.join('/')
-}
-
-async function setLevel (level) {
+async function setLevel (level = '') {
   const { importPkg } = this.bajo.helper
   const { padStart } = await importPkg('lodash-es')
-  const [...levels] = level.split('.')
+  const [...levels] = (level + '').split('.')
   for (const i in levels) {
     levels[i] = padStart(levels[i], 4, '0')
   }
@@ -35,7 +19,7 @@ async function setLevel (level) {
 
 async function getPages (book) {
   const { importPkg, titleize } = this.bajo.helper
-  const { doctypes } = this.bajoBook.helper
+  const { doctypes, getTitleFromPath } = this.bajoBook.helper
   const { find, merge, concat } = await importPkg('lodash-es')
   const [fs, fastGlob, matter] = await importPkg('fs-extra', 'fast-glob', 'bajo-web-mpa:gray-matter')
   const pagesDir = `${book.dir}/pages`
@@ -43,12 +27,7 @@ async function getPages (book) {
   const pages = []
   const sections = []
   for (const file of files) {
-    let id = book.id + trimLevels(file, pagesDir)
-    let [level, ...bases] = path.basename(file).split('-')
-    level = await setLevel.call(this, level)
-    let [sectionLevel] = path.basename(path.dirname(file)).split('-')
-    sectionLevel = await setLevel.call(this, sectionLevel)
-    id = `${path.dirname(id)}/${bases.join('-')}`
+    let id = book.id + file.replace(pagesDir, '')
     const ext = path.extname(id)
     let fileBase = file.replace(`${book.dir}/pages/`, '')
     const asset = !doctypes.includes(ext)
@@ -66,37 +45,42 @@ async function getPages (book) {
     // sections
     if (sectionId !== book.id && !find(sections, { id: sectionId })) {
       const title = titleize(getTitleFromPath(path.basename(sectionId)))
-      const extra = metadata.pages[path.dirname(fileBase)] ?? {}
-      sections.push(merge({
+      const [,,, ...paths] = sectionId.split('/')
+      const extra = metadata.pages[paths.join('/')] ?? {}
+      const sitem = merge({
         id: sectionId,
         bookId: book.id,
-        level: sectionLevel,
         title
-      }, extra))
+      }, extra)
+      sitem.level = await setLevel.call(this, sitem.level)
+      sections.push(sitem)
       const parentId = path.dirname(sectionId)
-      pages.push(merge({
+      const item = merge({
         id: sectionId,
         title,
         file,
-        level: sectionLevel,
         asset: false,
         section: true,
         sectionId: parentId === book.id ? undefined : parentId,
         bookId: book.id
-      }, extra))
+      }, extra)
+      item.level = await setLevel.call(this, item.level)
+      pages.push(item)
     }
     // pages
-    const extra = metadata.pages[fileBase] ?? {}
-    pages.push(merge({
+    const [,,, ...paths] = id.split('/')
+    const extra = metadata.pages[paths.join('/')] ?? {}
+    const item = merge({
       id,
       title: titleize(getTitleFromPath(path.basename(file, ext))),
       asset,
       section: false,
       file,
-      level,
       sectionId,
       bookId: book.id
-    }, extra, extraMatter))
+    }, extra, extraMatter)
+    item.level = await setLevel.call(this, item.level)
+    pages.push(item)
   }
   rec.section = concat(rec.section, sections)
   rec.page = concat(rec.page, pages)
