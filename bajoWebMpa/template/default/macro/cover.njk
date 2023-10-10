@@ -10,12 +10,15 @@
   {% endif %}
   {% cmp 'cardBody' %}
     {% cmp 'cardTitle' %}{{ book.title|t }}{% endcmp %}
-    {% if full %}
-      {% cmp 'cardSubtitle' %}{{ 'by'|t }}: {{ book.author|mailto }}{% endcmp %}
+    {% if not book.subTitle|isEmpty %}
+      {% cmp 'cardSubtitle' %}{{ book.subTitle|t }}{% endcmp %}
     {% endif %}
     {% cmp 'cardText' %}{{ book.description|t }}{% endcmp %}
     {% if link %}
       {% cmp 'button', tag='a', variant='primary', href=routePath('bajoBook:' + book.id), stretchedLink=true %}{{ 'Go'|t }}{% endcmp %}
+    {% endif %}
+    {% if full and not book.author|isEmpty %}
+      {% cmp 'cardText' %}{{ 'By'|t }}: {{ book.author|mailto }}{% endcmp %}
     {% endif %}
   {% endcmp %}
 {% endcmp %}

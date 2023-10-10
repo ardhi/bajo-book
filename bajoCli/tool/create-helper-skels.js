@@ -1,4 +1,4 @@
-import getBookAndPlugin from '../lib/get-book-plugin.js'
+import getBookPathAndPlugin from '../lib/get-book-path-and-plugin.js'
 
 async function generateContent (name, item) {
   const { importPkg } = this.bajo.helper
@@ -23,7 +23,7 @@ async function createHelperSkels (path, args) {
   const { importPkg, print, getConfig } = this.bajo.helper
   const { isEmpty, keys, kebabCase } = await importPkg('lodash-es')
   const [fs, input] = await importPkg('fs-extra', 'bajo-cli:@inquirer/input')
-  const { plugin, bookId, bookPath } = await getBookAndPlugin.call(this, args)
+  const { plugin, bookPath } = await getBookPathAndPlugin.call(this, args)
   let [helperPath] = args
   helperPath = await input({
     message: print.__('Please enter a root directory for helper pages:'),
@@ -32,7 +32,7 @@ async function createHelperSkels (path, args) {
   if (isEmpty(helperPath)) print.fatal('You must enter a root directory for helper pages first')
   const config = getConfig()
   if (keys(this[plugin].helper).length === 0) print.fatal('Plugin doesn\'t have any helper')
-  const dir = `${bookPath}/${bookId}/pages/${helperPath}`
+  const dir = `${bookPath}/pages/${helperPath}`
   if (fs.existsSync(dir)) print.warn('Directory \'%s\' already exist', dir)
   for (const name in this[plugin].helper) {
     const basename = `${kebabCase(name)}.md`
@@ -43,7 +43,7 @@ async function createHelperSkels (path, args) {
     }
     const content = await generateContent.call(this, name, this[plugin].helper[name])
     await fs.outputFile(file, content, 'utf8')
-    print.succeed('Writing to \'%s\'', dir.replace(bookPath, '') + '/' + basename)
+    print.succeed('Writing to \'%s\'', `/${basename}`)
   }
   print.succeed('Done!')
 }

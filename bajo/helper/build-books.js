@@ -19,9 +19,12 @@ async function setLevel (level = '') {
 
 async function getPages (book) {
   const { importPkg, titleize } = this.bajo.helper
-  const { doctypes, getTitleFromPath } = this.bajoBook.helper
-  const { find, merge, concat } = await importPkg('lodash-es')
+  const { doctypes, getTitleFromPath, rereadMetadata } = this.bajoBook.helper
+  const { find, merge, concat, isEmpty } = await importPkg('lodash-es')
   const [fs, fastGlob, matter] = await importPkg('fs-extra', 'fast-glob', 'bajo-web-mpa:gray-matter')
+  if (isEmpty(metadata.pages)) {
+    metadata = await rereadMetadata({ resetPages: true, bookPath: book.dir })
+  }
   const pagesDir = `${book.dir}/pages`
   const files = (await fastGlob(`${pagesDir}/**/*`)).sort()
   const pages = []

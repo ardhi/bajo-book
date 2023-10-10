@@ -3,6 +3,7 @@
   "properties": [
     { "name": "id", "maxLength": 255 },
     { "name": "title", "type": "string", "maxLength": 100, "required": true, "index": true },
+    { "name": "subTitle", "type": "string", "maxLength": 100, "index": true },
     { "name": "description", "type": "string" },
     { "name": "plugin", "type": "string", "maxLength": 50, "required": true, "index": true },
     { "name": "dir", "type": "string", "required": true },

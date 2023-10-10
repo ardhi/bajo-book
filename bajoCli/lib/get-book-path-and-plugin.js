@@ -1,4 +1,4 @@
-async function getBookAndPlugin (args) {
+async function getBookPathAndPlugin (args) {
   const { importPkg, print, getConfig } = this.bajo.helper
   const { isEmpty, keys, map, without } = await importPkg('lodash-es')
   const [fastGlob, select] = await importPkg('fast-glob', 'bajo-cli:@inquirer/select')
@@ -14,7 +14,7 @@ async function getBookAndPlugin (args) {
   if (!this[plugin]) print.fatal('Invalid plugin \'%s\'', plugin)
   const cfg = getConfig(plugin, { full: true })
   if (keys(this[plugin].helper).length === 0) print.fatal('Plugin doesn\'t have any helper')
-  const bookPath = `${cfg.dir.pkg}/bajoBook/book`
+  let bookPath = `${cfg.dir.pkg}/bajoBook/book`
   const dirs = await fastGlob(`${bookPath}/*`, { onlyDirectories: true })
   if (dirs.length === 0) print.fatal('No book found for plugin \'%s\'', plugin)
   const books = map(dirs, d => d.replace(bookPath, '').slice(1))
@@ -25,7 +25,8 @@ async function getBookAndPlugin (args) {
     })
   }
   if (!books.includes(bookId)) print.fatal('Invalid book ID \'%s\'', bookId)
-  return { plugin, bookId, bookPath }
+  bookPath = `${bookPath}/${bookId}`
+  return { plugin, bookPath }
 }
 
-export default getBookAndPlugin
+export default getBookPathAndPlugin
