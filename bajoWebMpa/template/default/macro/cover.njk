@@ -15,10 +15,23 @@
     {% endif %}
     {% cmp 'cardText' %}{{ book.description|t }}{% endcmp %}
     {% if link %}
-      {% cmp 'button', tag='a', variant='primary', href=routePath('bajoBook:' + book.id), stretchedLink=true %}{{ 'Go'|t }}{% endcmp %}
+      {% cmp 'cardLink', href=routePath('bajoBook:' + book.id), stretchedLink=true %}{{ 'Read'|t }}{% endcmp %}
     {% endif %}
-    {% if full and not book.author|isEmpty %}
-      {% cmp 'cardText' %}{{ 'By'|t }}: {{ book.author|mailto }}{% endcmp %}
+    {% if full %}
+      {% cmp 'div', display='flex', justifyContent='between' %}
+        {% if not book.author|isEmpty %}
+          {% cmp 'small', text='bodySecondary' %}
+            {{ 'By'|t }}: {{ book.author|mailto }}
+          {% endcmp %}
+        {% endif %}
+        {% if not book.meta.externalLink|isEmpty %}
+          {% cmp 'small', text='bodySecondary' %}
+            {% for k, v in book.meta.externalLink %}
+              {% cmp 'a', href=v %}{{ k }}{% endcmp %}
+            {% endfor %}
+          {% endcmp %}
+        {% endif %}
+      {% endcmp %}
     {% endif %}
   {% endcmp %}
 {% endcmp %}

@@ -36,9 +36,7 @@
           {% endcmp %}
           -->
           {% cmp 'nav', flex='row,wrap', margin='startAuto' %}
-            {% cmp 'navItemAccount' %}{% endcmp %}
-            {% cmp 'navItem', noLink=true, padding='x0,y0' %}{% cmp 'spacer' %}{% endcmp %}{% endcmp %}
-            {% cmp 'navItemDarkmode' %}{% endcmp %}
+            {% include 'bajoWebMpa:/partial/nav-switcher' %}
           {% endcmp %}
         {% endcmp %}
       {% endcmp %}
