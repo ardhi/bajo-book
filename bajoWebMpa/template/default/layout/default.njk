@@ -29,15 +29,8 @@
           {% endcmp %}
         {% endif %}
         {% cmp 'navbarToggler', collapseId='main-navs' %}{% endcmp %}
-        {% cmp 'navbarCollapse', id='main-navs' %}
-          <!--
-          {% cmp 'nav', flex='row,wrap' %}
-            {% cmp 'navItem' %}test{% endcmp %}
-          {% endcmp %}
-          -->
-          {% cmp 'nav', flex='row,wrap', margin='startAuto' %}
-            {% include 'bajoWebMpa:/partial/nav-switcher' %}
-          {% endcmp %}
+        {% cmp 'navbarCollapse', id='main-navs', justifyContent='end' %}
+          {% include 'bajoWebMpa:/partial/nav-switcher' %}
         {% endcmp %}
       {% endcmp %}
     {% endcmp %}

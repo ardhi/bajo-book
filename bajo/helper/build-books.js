@@ -94,10 +94,10 @@ async function save () {
   const { recordClear, recordCreate } = this.bajoDb.helper
   const opts = { skipHook: true }
   for (const r of recs) {
-    const repo = pascalCase(`book ${r}`)
-    await recordClear(repo, opts)
+    const coll = pascalCase(`book ${r}`)
+    await recordClear(coll, opts)
     for (const item of rec[r]) {
-      await recordCreate(repo, item, opts)
+      await recordCreate(coll, item, opts)
     }
   }
 }
