@@ -4,9 +4,7 @@ async function beforeResourceMerge (plugin, lng, content) {
   if (plugin !== 'bajoBook') return
   await eachPlugins(async function ({ file, plugin, dir }) {
     const item = await readConfig(file)
-    // const book = file.replace(dir + '/book/', '').split('/')[0]
     merge(content, item)
-    // set(content, `${plugin}.${book}`, item)
   }, { glob: 'book/**/*.json' })
 }
 
