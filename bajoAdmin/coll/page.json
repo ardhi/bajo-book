@@ -1,0 +1,8 @@
+{
+  "view": {
+    "list": {
+      "hidden": ["description", "level", "meta", "file", "meta", "ref", "sectionId", "bookId"],
+      "defSort": "id:1"
+    }
+  }
+}
