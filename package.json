@@ -1,6 +1,6 @@
 {
   "name": "bajo-book",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "description": "Book App for Bajo Framework",
   "main": "index.js",
   "scripts": {

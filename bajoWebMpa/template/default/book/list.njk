@@ -4,7 +4,7 @@
 {% block body %}
 {% cmp 'navbar', margin='bottom3' %}
   {% cmp 'form', display='flex', role='search' %}
-    {% cmp 'input', name='query', margin='end2', type='search', placeholder='Search'|t, ariaLabel='Search', value=_meta.reqQuery.query %}{% endcmp %}
+    {% cmp 'input', name='query', margin='end2', type='search', placeholder='Search'|t, ariaLabel='Search', value=_meta.query.query %}{% endcmp %}
   {% endcmp %}
   {% cmp 'viewTypeButtons', list=list, types=['gridSmall', 'grid'] %}{% endcmp %}
 {% endcmp %}
