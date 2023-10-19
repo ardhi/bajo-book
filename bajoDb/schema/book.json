@@ -11,5 +11,6 @@
     { "name": "meta", "type": "object" },
     { "name": "author", "type": "string" }
   ],
-  "feature": ["updatedAt"]
+  "feature": ["updatedAt"],
+  "disabled": ["update", "remove"]
 }

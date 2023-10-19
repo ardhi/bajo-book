@@ -13,5 +13,6 @@
     { "name": "meta", "type": "object" },
     { "name": "ref", "type": "object" }
   ],
-  "feature": ["updatedAt"]
+  "feature": ["updatedAt"],
+  "disabled": ["update", "remove"]
 }

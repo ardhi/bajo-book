@@ -8,5 +8,6 @@
     { "name": "bookId", "type": "string", "required": true, "index": true },
     { "name": "meta", "type": "object" }
   ],
-  "feature": ["updatedAt"]
+  "feature": ["updatedAt"],
+  "disabled": ["update", "remove"]
 }
