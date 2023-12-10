@@ -1,4 +1,4 @@
-async function createBook (path, args) {
+async function createBook ({ path, args, returnEarly }) {
   const { importPkg, print, getConfig } = this.bajo.helper
   const { isEmpty, keys, map, kebabCase, without } = await importPkg('lodash-es')
   const [fs, select, input] = await importPkg('fs-extra', 'bajo-cli:@inquirer/select',
@@ -11,17 +11,29 @@ async function createBook (path, args) {
       choices: map(plugins, p => ({ value: p }))
     })
   }
-  if (isEmpty(plugin)) print.fatal('You must select a plugin first')
-  if (!this[plugin]) print.fatal('Invalid plugin \'%s\'', plugin)
+  if (isEmpty(plugin)) {
+    print.fail('You must select a plugin first', { exit: !returnEarly })
+    if (returnEarly) return
+  }
+  if (!this[plugin]) {
+    print.fail('Invalid plugin \'%s\'', plugin, { exit: !returnEarly })
+    if (returnEarly) return
+  }
   bookName = await input({
     message: print.__('Please enter a book name:'),
     default: bookName
   })
-  if (isEmpty(bookName)) print.fatal('You must enter a book name first')
+  if (isEmpty(bookName)) {
+    print.fail('You must enter a book name first', { exit: !returnEarly })
+    if (returnEarly) return
+  }
   const cfg = getConfig(plugin, { full: true })
   const cfgBook = getConfig('bajoBook', { full: true })
   const dir = `${cfg.dir.pkg}/bajoBook/book/${kebabCase(bookName)}`
-  if (fs.existsSync(dir)) print.fatal('Book \'%s\' already exist', dir)
+  if (fs.existsSync(dir)) {
+    print.fail('Book \'%s\' already exist', dir, { exit: !returnEarly })
+    if (returnEarly) return
+  }
   author = await input({
     message: print.__('Please enter author info:')
   })

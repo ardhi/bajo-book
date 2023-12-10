@@ -19,7 +19,7 @@ async function generateContent (name, item) {
   return results.join('\n')
 }
 
-async function createHelperSkels (path, args) {
+async function createHelperSkels ({ path, args, returnEarly }) {
   const { importPkg, print, getConfig } = this.bajo.helper
   const { isEmpty, keys, kebabCase } = await importPkg('lodash-es')
   const [fs, input] = await importPkg('fs-extra', 'bajo-cli:@inquirer/input')
@@ -29,9 +29,15 @@ async function createHelperSkels (path, args) {
     message: print.__('Please enter a root directory for helper pages:'),
     default: helperPath ?? 'api/helper'
   })
-  if (isEmpty(helperPath)) print.fatal('You must enter a root directory for helper pages first')
+  if (isEmpty(helperPath)) {
+    print.fail('You must enter a root directory for helper pages first', { exit: !returnEarly })
+    if (returnEarly) return
+  }
   const config = getConfig()
-  if (keys(this[plugin].helper).length === 0) print.fatal('Plugin doesn\'t have any helper')
+  if (keys(this[plugin].helper).length === 0) {
+    print.fail('Plugin doesn\'t have any helper', { exit: !returnEarly })
+    if (returnEarly) return
+  }
   const dir = `${bookPath}/pages/${helperPath}`
   if (fs.existsSync(dir)) print.warn('Directory \'%s\' already exist', dir)
   for (const name in this[plugin].helper) {
