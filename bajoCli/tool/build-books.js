@@ -1,4 +1,4 @@
-async function buildBooks ({ path, args, returnEarly }) {
+async function buildBooks ({ path, args }) {
   const { importPkg, print, importModule, getConfig } = this.bajo.helper
   const { buildBooks } = this.bajoBook.helper
   const prompts = await importPkg('bajo-cli:@inquirer/prompts')
