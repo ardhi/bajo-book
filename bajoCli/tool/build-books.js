@@ -9,7 +9,8 @@ async function buildBooks ({ path, args }) {
   })
   if (!answer) {
     print.fail('Aborted!')
-    process.exit(1)
+    process.kill(process.pid, 'SIGINT')
+    return
   }
   const cfg = getConfig('bajoDb', { full: true })
   const start = await importModule(`${cfg.dir.pkg}/bajo/start.js`)
