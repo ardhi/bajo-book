@@ -1,8 +1,7 @@
 async function createBook ({ path, args }) {
-  const { importPkg, print, getConfig, spinner } = this.bajo.helper
-  const { isEmpty, keys, map, kebabCase, without } = await importPkg('lodash-es')
-  const [fs, select, input] = await importPkg('fs-extra', 'bajo-cli:@inquirer/select',
-    'bajo-cli:@inquirer/input')
+  const { importPkg, print, getConfig, spinner, fs } = this.bajo.helper
+  const { isEmpty, keys, map, kebabCase, without } = this.bajo.helper._
+  const [select, input] = await importPkg('bajoCli:@inquirer/select', 'bajoCli:@inquirer/input')
   const config = getConfig()
   let [plugin, bookName, author] = args
   const plugins = without(keys(this), 'dump')

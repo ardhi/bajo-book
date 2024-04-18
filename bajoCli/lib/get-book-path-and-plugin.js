@@ -1,7 +1,7 @@
 async function getBookPathAndPlugin (args) {
-  const { importPkg, print, getConfig } = this.bajo.helper
-  const { isEmpty, keys, map, without } = await importPkg('lodash-es')
-  const [fastGlob, select] = await importPkg('fast-glob', 'bajo-cli:@inquirer/select')
+  const { fastGlob, importPkg, print, getConfig } = this.bajo.helper
+  const { isEmpty, keys, map, without } = this.bajo.helper._
+  const select = await importPkg('bajoCli:@inquirer/select')
   let [plugin, bookId] = args
   const plugins = without(keys(this), 'dump')
   if (isEmpty(plugin)) {

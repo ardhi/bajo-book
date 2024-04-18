@@ -1,7 +1,7 @@
 async function buildBooks ({ path, args }) {
   const { importPkg, print, importModule, getConfig } = this.bajo.helper
   const { buildBooks } = this.bajoBook.helper
-  const prompts = await importPkg('bajo-cli:@inquirer/prompts')
+  const prompts = await importPkg('bajoCli:@inquirer/prompts')
   const { confirm } = prompts
   const answer = await confirm({
     message: print.__('You\'re about to rebuild all books. Continue?'),

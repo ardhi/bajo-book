@@ -1,8 +1,8 @@
 import getBookPathAndPlugin from '../lib/get-book-path-and-plugin.js'
 
 async function rereadMetadata (_, args) {
-  const { print, importPkg, getConfig } = this.bajo.helper
-  const { get, isEmpty } = await importPkg('lodash-es')
+  const { print, getConfig } = this.bajo.helper
+  const { get, isEmpty } = this.bajo.helper._
   const { rereadMetadata } = this.bajoBook.helper
   const { bookPath } = await getBookPathAndPlugin.call(this, args)
   const config = getConfig()

@@ -1,8 +1,7 @@
 import getBookPathAndPlugin from '../lib/get-book-path-and-plugin.js'
 
-async function generateContent (name, item) {
-  const { importPkg } = this.bajo.helper
-  const { isArray, isFunction, isPlainObject } = await importPkg('lodash-es')
+function generateContent (name, item) {
+  const { isArray, isFunction, isPlainObject } = this.bajo.helper._
   const results = ['---']
   let type = ''
   if (isArray(item)) type = 'array'
@@ -20,9 +19,9 @@ async function generateContent (name, item) {
 }
 
 async function createHelperSkels ({ path, args }) {
-  const { importPkg, print, getConfig } = this.bajo.helper
-  const { isEmpty, keys, kebabCase } = await importPkg('lodash-es')
-  const [fs, input] = await importPkg('fs-extra', 'bajo-cli:@inquirer/input')
+  const { fs, importPkg, print, getConfig } = this.bajo.helper
+  const { isEmpty, keys, kebabCase } = this.bajo.helper._
+  const input = await importPkg('bajoCli:@inquirer/input')
   const { plugin, bookPath } = await getBookPathAndPlugin.call(this, args)
   const config = getConfig()
   let [helperPath] = args
@@ -41,7 +40,7 @@ async function createHelperSkels ({ path, args }) {
       print.fail('File for helper \'%s\' exist already, won\'t overwrite without --force', name)
       continue
     }
-    const content = await generateContent.call(this, name, this[plugin].helper[name])
+    const content = generateContent.call(this, name, this[plugin].helper[name])
     await fs.outputFile(file, content, 'utf8')
     print.succeed('Writing to \'%s\'', `/${basename}`)
   }

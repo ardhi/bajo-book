@@ -7,9 +7,8 @@ for (const r of recs) {
 }
 let metadata = {}
 
-async function setLevel (level = '') {
-  const { importPkg } = this.bajo.helper
-  const { padStart } = await importPkg('lodash-es')
+function setLevel (level = '') {
+  const { padStart } = this.bajo.helper._
   const [...levels] = (level + '').split('.')
   for (const i in levels) {
     levels[i] = padStart(levels[i], 4, '0')
@@ -18,10 +17,10 @@ async function setLevel (level = '') {
 }
 
 async function getPages (book) {
-  const { importPkg, titleize } = this.bajo.helper
+  const { fastGlob, importPkg, fs, titleize } = this.bajo.helper
   const { doctypes, getTitleFromPath, rereadMetadata } = this.bajoBook.helper
-  const { find, merge, concat, isEmpty } = await importPkg('lodash-es')
-  const [fs, fastGlob, matter] = await importPkg('fs-extra', 'fast-glob', 'bajo-web-mpa:gray-matter')
+  const { find, merge, concat, isEmpty } = this.bajo.helper._
+  const matter = await importPkg('bajoWebMpa:gray-matter')
   if (isEmpty(metadata.pages)) {
     metadata = await rereadMetadata({ resetPages: true, bookPath: book.dir })
   }
@@ -55,7 +54,7 @@ async function getPages (book) {
         bookId: book.id,
         title
       }, extra)
-      sitem.level = await setLevel.call(this, sitem.level)
+      sitem.level = setLevel.call(this, sitem.level)
       sections.push(sitem)
       const parentId = path.dirname(sectionId)
       const item = merge({
@@ -67,7 +66,7 @@ async function getPages (book) {
         sectionId: parentId === book.id ? undefined : parentId,
         bookId: book.id
       }, extra)
-      item.level = await setLevel.call(this, item.level)
+      item.level = setLevel.call(this, item.level)
       pages.push(item)
     }
     // pages
@@ -82,7 +81,7 @@ async function getPages (book) {
       sectionId,
       bookId: book.id
     }, extra, extraMatter)
-    item.level = await setLevel.call(this, item.level)
+    item.level = setLevel.call(this, item.level)
     pages.push(item)
   }
   rec.section = concat(rec.section, sections)
@@ -103,8 +102,8 @@ async function save () {
 }
 
 async function buildBooks (progress) {
-  const { readConfig, eachPlugins, importPkg } = this.bajo.helper
-  const { merge, omit } = await importPkg('lodash-es')
+  const { readConfig, eachPlugins } = this.bajo.helper
+  const { merge, omit } = this.bajo.helper._
   await eachPlugins(async function ({ file, plugin, dir, alias }) {
     metadata = {}
     const title = path.basename(file)

@@ -14,14 +14,13 @@ function addMetaParent (item) {
 }
 
 async function rereadMetadata ({ bookPath, resetPages } = {}) {
-  const { importPkg, readJson } = this.bajo.helper
+  const { fastGlob, readJson, fs } = this.bajo.helper
   const { doctypes } = this.bajoBook.helper
-  const { filter, get, set } = await importPkg('lodash-es')
-  const [fg, fs] = await importPkg('fast-glob', 'fs-extra')
+  const { filter, get, set } = this.bajo.helper._
   const mfile = `${bookPath}/.metadata.json`
   const metadata = await readJson(mfile)
   metadata.pages = resetPages ? {} : (metadata.pages ?? {})
-  const files = await fg(`${bookPath}/pages/**/*.{${doctypes.map(t => t.slice(1)).join(',')}}`)
+  const files = await fastGlob(`${bookPath}/pages/**/*.{${doctypes.map(t => t.slice(1)).join(',')}}`)
   for (const f of files) {
     let base = f.replace(`${bookPath}/pages`, '')
     base = base.replace(path.extname(f), '').slice(1)
