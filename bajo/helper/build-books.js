@@ -90,11 +90,11 @@ async function getPages (book) {
 
 async function save () {
   const { pascalCase } = this.bajo.helper
-  const { recordClear, recordCreate } = this.bajoDb.helper
+  const { collClear, recordCreate } = this.bajoDb.helper
   const opts = { noHook: true, noCache: true }
   for (const r of recs) {
     const coll = pascalCase(`book ${r}`)
-    await recordClear(coll, opts)
+    await collClear(coll, opts)
     for (const item of rec[r]) {
       await recordCreate(coll, item, opts)
     }

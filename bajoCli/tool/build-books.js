@@ -1,5 +1,5 @@
 async function buildBooks ({ path, args }) {
-  const { importPkg, print, importModule, getConfig } = this.bajo.helper
+  const { importPkg, print, startPlugin } = this.bajo.helper
   const { buildBooks } = this.bajoBook.helper
   const prompts = await importPkg('bajoCli:@inquirer/prompts')
   const { confirm } = prompts
@@ -12,9 +12,7 @@ async function buildBooks ({ path, args }) {
     process.kill(process.pid, 'SIGINT')
     return
   }
-  const cfg = getConfig('bajoDb', { full: true })
-  const start = await importModule(`${cfg.dir.pkg}/bajo/start.js`)
-  await start.call(this, 'all')
+  await startPlugin('bajoDb')
   await buildBooks()
 }
 
