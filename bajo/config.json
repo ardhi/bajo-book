@@ -1,5 +1,0 @@
-{
-  "title": "Books",
-  "prefix": "book",
-  "dependencies": ["bajo-web", "bajo-extra", "bajo-web-mpa", "bajo-web-static"]
-}

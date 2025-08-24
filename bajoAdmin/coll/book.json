@@ -1,8 +1,0 @@
-{
-  "view": {
-    "hidden": ["plugin", "dir", "meta", "synopsis"],
-    "list": {
-      "defSort": "id:1"
-    }
-  }
-}
